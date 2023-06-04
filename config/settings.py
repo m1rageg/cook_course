@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'mptt',
     'ckeditor',
-
+    'graphene_django',
     'blog',
     'contact',
     'gallery',
@@ -170,4 +170,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR, 'cache'),
     }
+}
+
+GRAPHENE = {
+    'SCHEMA': 'config.schema.schema'
 }
