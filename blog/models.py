@@ -7,6 +7,8 @@ from django.utils.text import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+
+
 class Category(MPTTModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
@@ -40,25 +42,25 @@ class Post(models.Model):
     text = models.TextField()
     category = models.ForeignKey(
         Category,
-        related_name="post",
+        related_name="posts",
         on_delete=models.SET_NULL,
         null=True
     )
-    tags = models.ManyToManyField(Tag, related_name="post")
-    create_at = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, related_name="posts")
+    created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=200, unique=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post_single", kwargs={"slug": self.category.slug, "post_slug": self.slug})
+        return reverse("post_single", kwargs={"category_slug": self.category.slug, "post_slug": self.slug})
 
     def get_recipes(self):
         return self.recipes.all()
 
     def get_comments(self):
-        return self.comment.all()
+        return self.comments.all()
 
 
 class Recipe(models.Model):
